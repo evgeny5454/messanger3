@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_register.xml"
+    app:startDestination="@id/phoneFragment">
+
+    <fragment
+        android:id="@+id/phoneFragment"
+        android:name="com.evgeny_m.messenger3.fragments.register.PhoneFragment"
+        android:label="fragment_phone"
+        tools:layout="@layout/fragment_phone" >
+        <action
+            android:id="@+id/action_phoneFragment_to_codeFragment"
+            app:destination="@id/codeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/codeFragment"
+        android:name="com.evgeny_m.messenger3.fragments.register.CodeFragment"
+        android:label="fragment_code"
+        tools:layout="@layout/fragment_code" />
+</navigation>

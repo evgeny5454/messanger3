@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/base_app_color">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/navDrawer_photo_fiend"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        app:cardCornerRadius="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/navDrawer_user_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/navDrawer_user_full_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        tools:text="Констанитн Константинопольский"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/navDrawer_photo_fiend"
+        app:layout_constraintTop_toBottomOf="@+id/navDrawer_photo_fiend" />
+
+    <TextView
+        android:id="@+id/navDrawer_user_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="+7 *** *** ** **"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/navDrawer_user_full_name"
+        app:layout_constraintTop_toBottomOf="@+id/navDrawer_user_full_name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

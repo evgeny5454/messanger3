@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:icon="@drawable/icon_menu_toolbar"
+        android:title=""
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <item
+                android:id="@+id/settings_menu_edit_full_name"
+                android:icon="@drawable/icon_edit_full_name"
+                android:title="Edit name"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/settings_menu_add_photo"
+                android:icon="@drawable/icon_add_photo"
+                android:title="Set new photo"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/settings_menu_log_out"
+                android:icon="@drawable/icon_log_out"
+                android:title="Log out"
+                app:showAsAction="never" />
+
+        </menu>
+    </item>
+</menu>
