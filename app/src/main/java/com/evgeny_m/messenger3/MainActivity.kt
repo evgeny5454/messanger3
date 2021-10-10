@@ -17,20 +17,17 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    }
 
-    override fun onStart() {
-        super.onStart()
-        APP = this
+        APP_ACTIVITY = this
         initFirebase()
 
-       if (auth.currentUser?.uid == null) {
+        if (auth.currentUser?.uid == null) {
             replaceActivity(RegisterActivity())
         } else {
             initNavDrawer() // инициализация DrawerLayout
         }
-
     }
+
 
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -40,7 +37,5 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             super.onBackPressed()
         }
-
     }
-
 }

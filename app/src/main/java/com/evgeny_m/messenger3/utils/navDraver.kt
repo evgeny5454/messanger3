@@ -9,7 +9,7 @@ import com.evgeny_m.messenger3.MainActivity
 import com.evgeny_m.messenger3.R
 
 lateinit var drawerLayout: DrawerLayout
-lateinit var APP: MainActivity
+lateinit var APP_ACTIVITY: MainActivity
 
 fun MainActivity.initNavDrawer() {
     drawerLayout = binding.drawerLayout
@@ -30,6 +30,6 @@ fun initBackButton(toolbar: Toolbar) {
     toolbar.setNavigationIcon(R.drawable.icon_back_button)
     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     toolbar.setNavigationOnClickListener {
-        APP.onBackPressed()
+        APP_ACTIVITY.onBackPressed()
     }
 }

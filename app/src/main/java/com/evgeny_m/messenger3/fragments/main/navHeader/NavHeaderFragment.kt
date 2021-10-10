@@ -31,6 +31,7 @@ open class NavHeaderFragment : Fragment() {
     fun initFields() {
         userPhone = binding.navDrawerUserPhone
         userFullName = binding.navDrawerUserFullName
+        userPhoto = binding.navDrawerUserPhoto
     }
 }
 

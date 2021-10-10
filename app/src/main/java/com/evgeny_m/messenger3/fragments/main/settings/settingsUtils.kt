@@ -3,7 +3,7 @@ package com.evgeny_m.messenger3.fragments.main.settings
 import android.widget.Toast
 import com.evgeny_m.messenger3.fragments.main.settings.settings_fragments.ChangeFullNameFragment
 import com.evgeny_m.messenger3.fragments.main.settings.settings_fragments.ChangeUserNameFragment
-import com.evgeny_m.messenger3.utils.APP
+import com.evgeny_m.messenger3.utils.APP_ACTIVITY
 import com.evgeny_m.messenger3.utils.user
 
 
@@ -22,11 +22,11 @@ fun ChangeUserNameFragment.initUserName() {
 }
 
 fun backToSettingsFragment() {
-    APP.onBackPressed()
+    APP_ACTIVITY.onBackPressed()
     showToast("data update")
 }
 
 fun showToast(message: String) {
-    Toast.makeText(APP, message, Toast.LENGTH_SHORT).show()
+    Toast.makeText(APP_ACTIVITY, message, Toast.LENGTH_SHORT).show()
 }
 

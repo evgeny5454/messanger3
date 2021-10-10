@@ -1,21 +1,28 @@
 package com.evgeny_m.messenger3.utils
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.evgeny_m.messenger3.MainActivity
 import com.evgeny_m.messenger3.fragments.main.settings.SettingsFragment
 import com.evgeny_m.messenger3.fragments.main.settings.backToSettingsFragment
 import com.evgeny_m.messenger3.fragments.main.settings.settings_fragments.ChangeUserNameFragment
+import com.evgeny_m.messenger3.fragments.main.settings.showToast
 import com.evgeny_m.messenger3.fragments.register.replacePhoneNumber
 import com.evgeny_m.messenger3.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 lateinit var auth: FirebaseAuth
 lateinit var database: DatabaseReference
+lateinit var storage: StorageReference
 lateinit var currentUserId: String
 lateinit var user: UserModel
 
@@ -28,20 +35,27 @@ lateinit var user: UserModel
 lateinit var userPhone : TextView
 @SuppressLint("StaticFieldLeak")
 lateinit var userFullName : TextView
+@SuppressLint("StaticFieldLeak")
+lateinit var userPhoto : ImageView
 
 const val NODE_USERS = "users"
 const val NODE_USER_NAMES = "usernames"
+
+const val FOLDER_PROFILE_IMAGE = "profile_image"
 
 const val CHILD_ID = "id"
 const val CHILD_PHONE = "phone"
 const val CHILD_USERFULLNAME = "userfullname"
 const val CHILD_USERNAME = "username"
 const val CHILD_BIO = "bio"
+const val CHILD_USER_PHOTO = "photoUrl"
+
 
 
 fun initFirebase(){
     auth = FirebaseAuth.getInstance()
     database = FirebaseDatabase.getInstance().reference
+    storage = FirebaseStorage.getInstance().reference
     currentUserId = auth.currentUser?.uid.toString()
     user = UserModel()
     initUser()
@@ -61,14 +75,14 @@ fun initUser() {
         })
 }
 
-fun Fragment.saveUserData(inputUserData: String, child : String ) {
+fun saveUserData(inputUserData: String, child : String ) {
     database
         .child(NODE_USERS)
         .child(currentUserId)
         .child(child)
         .setValue(inputUserData).addOnCompleteListener {
             if (it.isSuccessful) {
-                APP.onBackPressed()
+                APP_ACTIVITY.onBackPressed()
                 showToast("data saved")
             } else {
                 showToast("data not saved")
@@ -145,6 +159,27 @@ fun SettingsFragment.readUserData() {
         }.addOnFailureListener {
             Log.d("firebase", "Error getting data", it)
         }
+
+    /**
+     * Читаем photoURL пользователя и передаем обновляем фото пользователя во фрагменте настроек
+     */
+
+  database
+        .child(NODE_USERS)
+        .child(currentUserId)
+        .child(CHILD_USER_PHOTO)
+        .get().addOnSuccessListener {
+            Log.d("firebase", "Got value ${it.value}")
+            userPhoto = binding.settingsUserImage
+            Glide
+                .with(this)
+                .load(it.value)
+                .centerCrop()
+                .into(userPhoto)
+
+        }.addOnFailureListener{
+            Log.d("firebase", "Error getting data", it)
+        }
 }
 
 /**
@@ -214,7 +249,7 @@ private fun updateCurrentUserName(newUserName: String) {
  * readUserDataToNavHeader() - обновляет данные в header navDrawer
  */
 
-fun readUserDataToNavHeader(userPhone: TextView, userFullName: TextView) {
+fun readUserDataToNavHeader() {
 
     database
         .child(NODE_USERS)
@@ -235,6 +270,24 @@ fun readUserDataToNavHeader(userPhone: TextView, userFullName: TextView) {
         .get().addOnSuccessListener {
             Log.d("firebase", "Got value ${it.value}")
             userFullName.text = it.value as CharSequence?
+
+        }.addOnFailureListener{
+            Log.d("firebase", "Error getting data", it)
+        }
+
+    database
+        .child(NODE_USERS)
+        .child(currentUserId)
+        .child(CHILD_USER_PHOTO)
+        .get().addOnSuccessListener {
+            Log.d("firebase", "Got value ${it.value}")
+
+            Glide
+                .with(APP_ACTIVITY)
+                .load(it.value)
+                .centerCrop()
+                .into(userPhoto)
+
 
         }.addOnFailureListener{
             Log.d("firebase", "Error getting data", it)
@@ -267,4 +320,35 @@ fun Fragment.authNewUser() {
             }
         }
 }
+
+fun updateUserPhoto(uri: Uri?) {
+    val path = storage.child(FOLDER_PROFILE_IMAGE)
+        .child(currentUserId)
+    if (uri != null) {
+        path.putFile(uri).addOnSuccessListener {
+            path.downloadUrl.addOnCompleteListener {
+                val photoUrl = it.result.toString()
+                saveUserPhotoUrl(photoUrl, CHILD_USER_PHOTO)
+            }
+        }
+    }
+}
+
+fun saveUserPhotoUrl(photoUrl: String, childUserPhoto: String) {
+    database
+        .child(NODE_USERS)
+        .child(currentUserId)
+        .child(childUserPhoto)
+        .setValue(photoUrl).addOnCompleteListener {
+            if (it.isSuccessful) {
+                showToast("data saved")
+            } else {
+                showToast("data not saved")
+            }
+        }
+}
+
+
+
+
 

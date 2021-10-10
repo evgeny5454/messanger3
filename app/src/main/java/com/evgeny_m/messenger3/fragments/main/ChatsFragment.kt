@@ -35,7 +35,7 @@ class ChatsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        readUserDataToNavHeader(userPhone, userFullName)
+        readUserDataToNavHeader()
     }
 
 }
