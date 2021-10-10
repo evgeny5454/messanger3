@@ -15,8 +15,8 @@ fun AppCompatActivity.replaceActivity(activity: AppCompatActivity) {
     startActivity(intent)
 }
 
-fun Fragment.showToast(message: String) {
-    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+fun showToast(message: String) {
+    Toast.makeText(APP_ACTIVITY, message, Toast.LENGTH_SHORT).show()
 }
 
 fun AppCompatActivity.showToast(message: String) {

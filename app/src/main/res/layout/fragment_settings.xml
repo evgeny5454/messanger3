@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
-            android:text="Константин Константинопольский"
+            tools:text="Константин Константинопольский"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/materialCardView"
@@ -227,7 +227,7 @@
                         android:id="@+id/settings_user_bio"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Bio"
+                        tools:text="Bio"
                         android:textSize="16sp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="10dp"/>

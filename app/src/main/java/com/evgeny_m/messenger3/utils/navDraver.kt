@@ -2,7 +2,6 @@ package com.evgeny_m.messenger3.utils
 
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -10,7 +9,7 @@ import com.evgeny_m.messenger3.MainActivity
 import com.evgeny_m.messenger3.R
 
 lateinit var drawerLayout: DrawerLayout
-lateinit var APP: MainActivity
+lateinit var APP_ACTIVITY: MainActivity
 
 fun MainActivity.initNavDrawer() {
     drawerLayout = binding.drawerLayout
@@ -20,17 +19,17 @@ fun MainActivity.initNavDrawer() {
     navView.setupWithNavController(navController)
 }
 
-fun Fragment.initMainNavigationButton(toolbar: Toolbar) {
+fun initMainNavigationButton(toolbar: Toolbar) {
     toolbar.setNavigationIcon(R.drawable.icon_gamburger_button)
     toolbar.setNavigationOnClickListener {
         drawerLayout.open()
     }
 }
 
-fun Fragment.initBackButton(toolbar: Toolbar) {
+fun initBackButton(toolbar: Toolbar) {
     toolbar.setNavigationIcon(R.drawable.icon_back_button)
     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     toolbar.setNavigationOnClickListener {
-        APP.onBackPressed()
+        APP_ACTIVITY.onBackPressed()
     }
 }

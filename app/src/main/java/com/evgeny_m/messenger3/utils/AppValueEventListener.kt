@@ -8,8 +8,6 @@ class AppValueEventListener(val onSuccess:(DataSnapshot) -> Unit) : ValueEventLi
     override fun onDataChange(snapshot: DataSnapshot) {
        onSuccess(snapshot)
     }
-
     override fun onCancelled(error: DatabaseError) {
-
     }
 }
