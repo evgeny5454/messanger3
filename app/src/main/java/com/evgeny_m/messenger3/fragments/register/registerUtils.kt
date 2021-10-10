@@ -40,6 +40,7 @@ fun PhoneFragment.sendPhone(inputPhoneNumber: String, toolbar: Toolbar) {
     }
 }
 
+/*
 fun Fragment.authNewUser() {
     val dateMap = mutableMapOf<String, Any>()
     val uid = auth.currentUser?.uid.toString()
@@ -61,4 +62,4 @@ fun Fragment.authNewUser() {
                 Log.d ("TASK2" , task2.exception?.message.toString())
             }
         }
-}
+}*/

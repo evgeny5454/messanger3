@@ -8,7 +8,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.evgeny_m.messenger3.R
 import com.evgeny_m.messenger3.databinding.FragmentChangeUserNameBinding
-import com.evgeny_m.messenger3.fragments.main.settings.checkingAndAddUserName
 import com.evgeny_m.messenger3.fragments.main.settings.initUserName
 import com.evgeny_m.messenger3.utils.*
 import java.util.*

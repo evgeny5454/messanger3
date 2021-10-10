@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.evgeny_m.messenger3.databinding.FragmentChatsBinding
-import com.evgeny_m.messenger3.fragments.main.navHeader.readUserDataToNavHeader
-import com.evgeny_m.messenger3.fragments.main.navHeader.userFullName
-import com.evgeny_m.messenger3.fragments.main.navHeader.userPhone
 import com.evgeny_m.messenger3.utils.initMainNavigationButton
+import com.evgeny_m.messenger3.utils.readUserDataToNavHeader
+import com.evgeny_m.messenger3.utils.userFullName
+import com.evgeny_m.messenger3.utils.userPhone
 
 
 class ChatsFragment : Fragment() {

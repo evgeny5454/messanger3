@@ -12,6 +12,7 @@ import com.evgeny_m.messenger3.R
 import com.evgeny_m.messenger3.databinding.FragmentPhoneBinding
 import com.evgeny_m.messenger3.utils.AppTextWatcher
 import com.evgeny_m.messenger3.utils.auth
+import com.evgeny_m.messenger3.utils.authNewUser
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential

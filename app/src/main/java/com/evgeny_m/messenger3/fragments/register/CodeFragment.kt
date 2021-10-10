@@ -10,6 +10,7 @@ import com.evgeny_m.messenger3.databinding.FragmentCodeBinding
 import com.evgeny_m.messenger3.fragments.register.PhoneFragment.Companion.storedVerificationId
 import com.evgeny_m.messenger3.utils.AppTextWatcher
 import com.evgeny_m.messenger3.utils.auth
+import com.evgeny_m.messenger3.utils.authNewUser
 import com.evgeny_m.messenger3.utils.showToast
 import com.google.firebase.auth.PhoneAuthProvider
 
