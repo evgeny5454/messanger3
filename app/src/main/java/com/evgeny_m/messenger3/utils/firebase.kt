@@ -49,6 +49,7 @@ const val CHILD_USERFULLNAME = "userfullname"
 const val CHILD_USERNAME = "username"
 const val CHILD_BIO = "bio"
 const val CHILD_USER_PHOTO = "photoUrl"
+const val CHILD_STATUS = "status"
 
 
 
@@ -326,8 +327,8 @@ fun updateUserPhoto(uri: Uri?) {
         .child(currentUserId)
     if (uri != null) {
         path.putFile(uri).addOnSuccessListener {
-            path.downloadUrl.addOnCompleteListener {
-                val photoUrl = it.result.toString()
+            path.downloadUrl.addOnSuccessListener {
+                val photoUrl = it.toString()
                 saveUserPhotoUrl(photoUrl, CHILD_USER_PHOTO)
             }
         }
@@ -347,6 +348,7 @@ fun saveUserPhotoUrl(photoUrl: String, childUserPhoto: String) {
             }
         }
 }
+
 
 
 

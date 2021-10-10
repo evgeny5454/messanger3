@@ -38,14 +38,18 @@ class SettingsFragment : Fragment() {
     }
 
 
+
     override fun onResume() {
         super.onResume()
+        showToast("onResume SettingsFragment")
         toolbar = binding.settingsToolbar
         toolbar.title = "Settings"
+
         initBackButton(toolbar)
         readUserData()
         initToolbarMenu()
         initSettingsItems() // инициализация кнопок во фрагменте настроек
+
     }
 
     private fun initSettingsItems() {
@@ -115,4 +119,5 @@ class SettingsFragment : Fragment() {
             updateUserPhoto(uri)
         }
     }
+    
 }

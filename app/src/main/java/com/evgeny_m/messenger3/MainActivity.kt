@@ -11,7 +11,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.close()
@@ -37,5 +35,15 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             super.onBackPressed()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        UserStatus.updateUserStatus(UserStatus.ONLINE)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        UserStatus.updateUserStatus(UserStatus.OFFLINE)
     }
 }
