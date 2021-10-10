@@ -2,11 +2,11 @@ package com.evgeny_m.messenger3.fragments.register
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.evgeny_m.messenger3.R
 import com.evgeny_m.messenger3.databinding.FragmentPhoneBinding
@@ -80,7 +80,7 @@ class PhoneFragment : Fragment() {
     }
     private fun singInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
 
-        auth.signInWithCredential(credential).addOnCompleteListener { it ->
+        auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
                 // данный метод еще не тестировался !
                 authNewUser()

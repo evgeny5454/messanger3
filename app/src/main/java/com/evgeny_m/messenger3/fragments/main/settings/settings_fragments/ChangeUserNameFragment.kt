@@ -7,39 +7,42 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.evgeny_m.messenger3.R
-import com.evgeny_m.messenger3.databinding.FragmentChangeFullNameBinding
-import com.evgeny_m.messenger3.fragments.main.settings.initFullName
+import com.evgeny_m.messenger3.databinding.FragmentChangeUserNameBinding
+import com.evgeny_m.messenger3.fragments.main.settings.checkingAndAddUserName
+import com.evgeny_m.messenger3.fragments.main.settings.initUserName
 import com.evgeny_m.messenger3.utils.*
+import java.util.*
 
+class ChangeUserNameFragment : Fragment() {
 
-class ChangeFullNameFragment : Fragment() {
-
-    lateinit var binding: FragmentChangeFullNameBinding
+    lateinit var binding: FragmentChangeUserNameBinding
     private lateinit var toolbar: Toolbar
+    lateinit var newUserName: String
+    lateinit var oldUserName: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentChangeFullNameBinding.inflate(layoutInflater)
+        binding = FragmentChangeUserNameBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
         initToolbar()
-        initFullName()
+        initUserName()
     }
 
     private fun initToolbar() {
-        toolbar = binding.changeFullNameToolbar
-        toolbar.title = "Your Name"
+        toolbar = binding.changeNameToolbar
+        toolbar.title = "UserName"
         initBackButton(toolbar)
 
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.menu_save -> {
-                    changeFullName()
+                    changeUserName()
                     hideKeyboard()
                     true
                 }
@@ -48,15 +51,14 @@ class ChangeFullNameFragment : Fragment() {
         }
     }
 
-    private fun changeFullName() {
-        val name = binding.changeNameText.text.toString()
-        val surName = binding.changeSurnameText.text.toString()
+    private fun changeUserName() {
+        newUserName = binding.changeUserNameText.text.toString().lowercase(Locale.getDefault())
+        oldUserName = user.username
 
-        if (name.isEmpty()) {
-            showToast("Enter your name")
+        if (newUserName.isEmpty()) {
+            showToast("Enter your user name")
         } else {
-            val fullName = "$name $surName"
-            saveUserData(fullName, CHILD_USERFULLNAME)
+            checkingAndAddUserName()
         }
     }
 }

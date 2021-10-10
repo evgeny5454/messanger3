@@ -2,15 +2,15 @@ package com.evgeny_m.messenger3.fragments.register
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.evgeny_m.messenger3.MainActivity
-import com.evgeny_m.messenger3.R
+import androidx.fragment.app.Fragment
 import com.evgeny_m.messenger3.databinding.FragmentCodeBinding
 import com.evgeny_m.messenger3.fragments.register.PhoneFragment.Companion.storedVerificationId
-import com.evgeny_m.messenger3.utils.*
+import com.evgeny_m.messenger3.utils.AppTextWatcher
+import com.evgeny_m.messenger3.utils.auth
+import com.evgeny_m.messenger3.utils.showToast
 import com.google.firebase.auth.PhoneAuthProvider
 
 

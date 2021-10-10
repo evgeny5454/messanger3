@@ -1,9 +1,14 @@
 package com.evgeny_m.messenger3.fragments.main.navHeader
 
 import android.util.Log
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.evgeny_m.messenger3.utils.*
 
-fun NavHeaderFragment.readUserData() {
+lateinit var userPhone : TextView
+lateinit var userFullName : TextView
+
+fun Fragment.readUserDataToNavHeader(userPhone: TextView, userFullName: TextView) {
 
     database
         .child(NODE_USERS)
@@ -11,7 +16,6 @@ fun NavHeaderFragment.readUserData() {
         .child(CHILD_PHONE)
         .get().addOnSuccessListener {
             Log.d("firebase", "Got value ${it.value}")
-            userPhone = binding.navDrawerUserPhone
             userPhone.text = it.value as CharSequence?
 
         }.addOnFailureListener{
@@ -24,14 +28,10 @@ fun NavHeaderFragment.readUserData() {
         .child(CHILD_USERFULLNAME)
         .get().addOnSuccessListener {
             Log.d("firebase", "Got value ${it.value}")
-            userFullName = binding.navDrawerUserFullName
             userFullName.text = it.value as CharSequence?
 
         }.addOnFailureListener{
             Log.d("firebase", "Error getting data", it)
         }
-
-
-
 
 }

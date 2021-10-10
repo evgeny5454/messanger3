@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.evgeny_m.messenger3.databinding.FragmentChatsBinding
+import com.evgeny_m.messenger3.fragments.main.navHeader.readUserDataToNavHeader
+import com.evgeny_m.messenger3.fragments.main.navHeader.userFullName
+import com.evgeny_m.messenger3.fragments.main.navHeader.userPhone
 import com.evgeny_m.messenger3.utils.initMainNavigationButton
 
 
@@ -29,4 +32,10 @@ class ChatsFragment : Fragment() {
         toolbar.title = "Messenger" // Сдесь передаем название приложения
         initMainNavigationButton(toolbar) // установил в тулбаре гамбургер
     }
+
+    override fun onResume() {
+        super.onResume()
+        readUserDataToNavHeader(userPhone, userFullName)
+    }
+
 }

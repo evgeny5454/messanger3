@@ -11,19 +11,17 @@ import androidx.navigation.findNavController
 import com.evgeny_m.messenger3.R
 import com.evgeny_m.messenger3.RegisterActivity
 import com.evgeny_m.messenger3.databinding.FragmentSettingsBinding
-import com.evgeny_m.messenger3.utils.auth
-import com.evgeny_m.messenger3.utils.initBackButton
-import com.evgeny_m.messenger3.utils.replaceActivity
-import com.evgeny_m.messenger3.utils.showToast
+import com.evgeny_m.messenger3.utils.*
 
 
 class SettingsFragment : Fragment() {
 
     lateinit var binding: FragmentSettingsBinding
     private lateinit var toolbar: Toolbar
-    lateinit var userPhone : TextView
+    lateinit var userPhone: TextView
     lateinit var userFullName: TextView
     lateinit var userName: TextView
+    lateinit var userBio: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,11 +61,11 @@ class SettingsFragment : Fragment() {
     }
 
     private fun editUserBio() {
-        showToast("editUserBio")
+        view?.findNavController()?.navigate(R.id.action_settingsFragment_to_changeBioFragment)
     }
 
     private fun editUserName() {
-        showToast("editUserName")
+        view?.findNavController()?.navigate(R.id.action_settingsFragment_to_changeUserNameFragment)
     }
 
     private fun initToolbarMenu() {
@@ -96,9 +94,6 @@ class SettingsFragment : Fragment() {
     }
 
     private fun editFullName() {
-        view?.
-        findNavController()?.
-        navigate(R.id.action_settingsFragment_to_changeFullNameFragment)
+        view?.findNavController()?.navigate(R.id.action_settingsFragment_to_changeFullNameFragment)
     }
-
 }

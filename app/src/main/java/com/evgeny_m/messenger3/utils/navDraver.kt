@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.evgeny_m.messenger3.MainActivity
 import com.evgeny_m.messenger3.R
+import com.evgeny_m.messenger3.fragments.main.navHeader.NavHeaderFragment
 
 lateinit var drawerLayout: DrawerLayout
 lateinit var APP: MainActivity

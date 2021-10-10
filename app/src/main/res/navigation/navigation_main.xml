@@ -17,10 +17,26 @@
         <action
             android:id="@+id/action_settingsFragment_to_changeFullNameFragment"
             app:destination="@id/changeFullNameFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_changeUserNameFragment"
+            app:destination="@id/changeUserNameFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_changeBioFragment"
+            app:destination="@id/changeBioFragment" />
     </fragment>
     <fragment
         android:id="@+id/changeFullNameFragment"
         android:name="com.evgeny_m.messenger3.fragments.main.settings.settings_fragments.ChangeFullNameFragment"
         android:label="fragment_change_full_name"
         tools:layout="@layout/fragment_change_full_name" />
+    <fragment
+        android:id="@+id/changeUserNameFragment"
+        android:name="com.evgeny_m.messenger3.fragments.main.settings.settings_fragments.ChangeUserNameFragment"
+        android:label="fragment_change_user_name"
+        tools:layout="@layout/fragment_change_user_name" />
+    <fragment
+        android:id="@+id/changeBioFragment"
+        android:name="com.evgeny_m.messenger3.fragments.main.settings.settings_fragments.ChangeBioFragment"
+        android:label="fragment_change_bio"
+        tools:layout="@layout/fragment_change_bio" />
 </navigation>
