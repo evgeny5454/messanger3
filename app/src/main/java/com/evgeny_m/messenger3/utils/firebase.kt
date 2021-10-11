@@ -48,8 +48,10 @@ lateinit var userPhoto: ImageView
 const val NODE_USERS = "users"
 const val NODE_USER_NAMES = "usernames"
 const val NODE_PHONES = "users_phones"
+const val NODE_PHONE_CONTATS = "users_phone_contacts"
 
-const val FOLDER_PROFILE_IMAGE = "profile_image"
+
+const val FOLDER_PROFILE_IMAGE = "profile_image" //storage
 
 const val CHILD_ID = "id"
 const val CHILD_PHONE = "phone"
@@ -438,7 +440,29 @@ fun initContacts() {
             }
         }
         cursor?.close()
+        checkPhonesToDatabase(arrayContacts)
     }
+}
+
+private fun checkPhonesToDatabase(arrayContacts: ArrayList<CommonModel>) {
+    val dateMap = mutableMapOf<String, Any>()
+    database
+        .child(NODE_PHONES).addListenerForSingleValueEvent(AppValueEventListener{
+            it.children.forEach{ phoneNumber ->
+                arrayContacts.forEach{ contact ->
+                    if (phoneNumber.key == contact.phone) {
+                        val idCommonUser = phoneNumber.value.toString()
+                        dateMap[CHILD_ID] = idCommonUser
+                        dateMap[CHILD_USERFULLNAME] = contact.userfullname
+                        database
+                            .child(NODE_PHONE_CONTATS)
+                            .child(currentUserId)
+                            .child(idCommonUser)
+                            .updateChildren(dateMap)
+                    }
+                }
+            }
+        })
 }
 
 
