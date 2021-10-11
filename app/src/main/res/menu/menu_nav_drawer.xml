@@ -6,6 +6,10 @@
     <group
         android:id="@+id/group_top"
         android:checkableBehavior = "none">
+        <item
+            android:id="@+id/contactsFragment"
+            android:icon="@drawable/icon_contact"
+            android:title="Contacts" />
 
         <item
             android:id="@+id/settingsFragment"

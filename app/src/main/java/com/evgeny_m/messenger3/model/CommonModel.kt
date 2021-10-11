@@ -1,6 +1,6 @@
 package com.evgeny_m.messenger3.model
 
-data class UserModel (
+data class CommonModel (
     val id: String = "",
     var username: String = "",
     var bio: String = "",

@@ -3,7 +3,8 @@ package com.evgeny_m.messenger3.utils
 enum class UserStatus (val status: String) {
     ONLINE("online"),
     OFFLINE("offline"),
-    TYPING("...is typing");
+    TYPING("...is typing"),
+    LOG_OUT("log out");
 
     companion object {
 

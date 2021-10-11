@@ -41,7 +41,7 @@ class SettingsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        showToast("onResume SettingsFragment")
+        //showToast("onResume SettingsFragment")
         toolbar = binding.settingsToolbar
         toolbar.title = "Settings"
 
@@ -83,6 +83,7 @@ class SettingsFragment : Fragment() {
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.settings_menu_log_out -> {
+                    UserStatus.updateUserStatus(UserStatus.LOG_OUT)
                     auth.signOut()
                     replaceActivity(RegisterActivity())
                     true

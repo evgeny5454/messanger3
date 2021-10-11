@@ -4,6 +4,8 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.evgeny_m.messenger3.model.CommonModel
+import com.google.firebase.database.DataSnapshot
 
 fun Fragment.replaceActivity(activity: AppCompatActivity) {
     val intent = Intent(requireContext(), activity::class.java)
@@ -22,3 +24,6 @@ fun showToast(message: String) {
 fun AppCompatActivity.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
+fun DataSnapshot.getCommonModel(): CommonModel =
+    this.getValue(CommonModel::class.java) ?: CommonModel()
