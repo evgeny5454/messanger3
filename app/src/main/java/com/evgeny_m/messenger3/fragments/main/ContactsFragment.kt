@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.evgeny_m.messenger3.R
@@ -65,7 +66,6 @@ class ContactsFragment : Fragment() {
                 position: Int,
                 model: CommonModel
             ) {
-
                 holder.name.text = model.userfullname
                 refUsers = database.child(NODE_USERS).child(model.id)
                 refUsers.addValueEventListener(AppValueEventListener {
@@ -78,6 +78,14 @@ class ContactsFragment : Fragment() {
                         .load(contact.photoUrl)
                         .centerCrop()
                         .into(holder.photo)
+                    holder.itemView.setOnClickListener {
+                        receivingUserId = model.id
+                        receivingUserFullName = model.userfullname
+
+                        view?.
+                        findNavController()?.
+                        navigate(R.id.action_contactsFragment_to_singleChatFragment)
+                    }
                 })
             }
         }
@@ -96,5 +104,10 @@ class ContactsFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         adapter.stopListening()
+    }
+
+    companion object {
+        lateinit var receivingUserId: String
+        lateinit var receivingUserFullName: String
     }
 }

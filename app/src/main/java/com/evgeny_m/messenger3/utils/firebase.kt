@@ -19,6 +19,7 @@ import com.evgeny_m.messenger3.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ServerValue
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
@@ -49,9 +50,12 @@ const val NODE_USERS = "users"
 const val NODE_USER_NAMES = "usernames"
 const val NODE_PHONES = "users_phones"
 const val NODE_PHONE_CONTATS = "users_phone_contacts"
+const val NODE_MESSAGES = "messages"
 
 
 const val FOLDER_PROFILE_IMAGE = "profile_image" //storage
+
+const val TYPE_TEXT = "text"
 
 const val CHILD_ID = "id"
 const val CHILD_PHONE = "phone"
@@ -60,6 +64,10 @@ const val CHILD_USERNAME = "username"
 const val CHILD_BIO = "bio"
 const val CHILD_USER_PHOTO = "photoUrl"
 const val CHILD_STATUS = "status"
+const val CHILD_TEXT = "text"
+const val CHILD_TYPE = "type"
+const val CHILD_FROM = "from"
+const val CHILD_TIME_STAMP = "time_stamp"
 
 fun initFirebase() {
     auth = FirebaseAuth.getInstance()
@@ -464,6 +472,33 @@ private fun checkPhonesToDatabase(arrayContacts: ArrayList<CommonModel>) {
             }
         })
 }
+fun sendMassage(message: String, receivingUserId: String, type: String, function: () -> Unit) {
+    val refDialogUser = "$NODE_MESSAGES/$currentUserId/$receivingUserId"
+    val refDialogReceivingUser = "$NODE_MESSAGES/$receivingUserId/$currentUserId"
+    val messageKey = database.child(refDialogUser).push().key
+
+    val mapMessage = hashMapOf<String, Any>()
+    mapMessage[CHILD_FROM] = currentUserId
+    mapMessage[CHILD_TYPE] = type
+    mapMessage[CHILD_TEXT] = message
+    mapMessage[CHILD_TIME_STAMP] = ServerValue.TIMESTAMP
+
+    val mapDialog = hashMapOf<String,Any>()
+    mapDialog["$refDialogUser/$messageKey"] = mapMessage
+    mapDialog["$refDialogReceivingUser/$messageKey"] = mapMessage
+
+    database
+        .updateChildren(mapDialog)
+        .addOnSuccessListener {
+            function()
+        }
+        .addOnFailureListener {
+            if (LOGING) {
+                Log.d(LOG_TAG, it.message.toString())
+            }
+        }
+}
+
 
 
 
