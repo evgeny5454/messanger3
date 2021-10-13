@@ -1,4 +1,4 @@
-package com.evgeny_m.messenger3.fragments.main
+package com.evgeny_m.messenger3.fragments.main.contacts
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -11,8 +11,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.evgeny_m.messenger3.databinding.FragmentSingleChatBinding
-import com.evgeny_m.messenger3.fragments.main.ContactsFragment.Companion.receivingUserFullName
-import com.evgeny_m.messenger3.fragments.main.ContactsFragment.Companion.receivingUserId
+import com.evgeny_m.messenger3.fragments.main.contacts.ContactsFragment.Companion.receivingUserFullName
+import com.evgeny_m.messenger3.fragments.main.contacts.ContactsFragment.Companion.receivingUserId
 import com.evgeny_m.messenger3.model.CommonModel
 import com.evgeny_m.messenger3.model.UserModel
 import com.evgeny_m.messenger3.utils.*

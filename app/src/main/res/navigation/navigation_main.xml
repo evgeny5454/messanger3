@@ -41,7 +41,7 @@
         tools:layout="@layout/fragment_change_bio" />
     <fragment
         android:id="@+id/contactsFragment"
-        android:name="com.evgeny_m.messenger3.fragments.main.ContactsFragment"
+        android:name="com.evgeny_m.messenger3.fragments.main.contacts.ContactsFragment"
         android:label="fragment_contacts"
         tools:layout="@layout/fragment_contacts" >
         <action
