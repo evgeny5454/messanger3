@@ -4,34 +4,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.evgeny_m.messenger3.R
 import com.evgeny_m.messenger3.databinding.ItemMessageBinding
 import com.evgeny_m.messenger3.model.CommonModel
+import com.evgeny_m.messenger3.utils.DiffUtilCallback
 import com.evgeny_m.messenger3.utils.asTime
 import com.evgeny_m.messenger3.utils.currentUserId
 import com.evgeny_m.messenger3.utils.showToast
 
 class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
 
-    private var listMessagesCache = emptyList<CommonModel>()
+    private var listMessagesCache = mutableListOf<CommonModel>()
+    private lateinit var diffResult: DiffUtil.DiffResult
 
     class SingleChatHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemMessageBinding.bind(view)
 
-        val blockUserMessage = binding.itemMessageUserMessageView
-        val userMassageText = binding.itemMessageSendUserMessageText
-        val userMassageTime = binding.itemMessageSendUserMessageTime
-        val userMessageView = binding.itemUserMessageView
+        val blockUserMessage = binding.itemUserMessageView
+        val userMassageText = binding.itemUserMessageText
+        val userMassageTime = binding.itemUserMessageTime
 
-        val blockReceiveMessage = binding.itemMessageReceivedMessageView
-        val receivedMassageText:TextView = binding.itemMessageReceivedMessageText
-        val receivedMessageTime:TextView = binding.itemMessageReceivedMessageTime
-        val receivedMessageView = binding.itemReceivedMessageView
+
+        val blockReceiveMessage = binding.itemReceivedMessageView
+        val receivedMassageText: TextView = binding.itemReceivedMessageText
+        val receivedMessageTime: TextView = binding.itemReceivedMessageTime
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleChatHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_message,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_message, parent, false)
         return SingleChatHolder(view)
     }
 
@@ -43,7 +46,7 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
             holder.blockReceiveMessage.visibility = View.GONE
             holder.userMassageText.text = listMessagesCache[position].text
             holder.userMassageTime.text = listMessagesCache[position].time_stamp.toString().asTime()
-            holder.userMessageView.setOnClickListener {
+            holder.blockUserMessage.setOnClickListener {
                 showToast("жмяк")
             }
 
@@ -52,8 +55,9 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
             holder.blockReceiveMessage.visibility = View.VISIBLE
             holder.blockUserMessage.visibility = View.GONE
             holder.receivedMassageText.text = listMessagesCache[position].text
-            holder.receivedMessageTime.text = listMessagesCache[position].time_stamp.toString().asTime()
-            holder.receivedMessageView.setOnClickListener {
+            holder.receivedMessageTime.text =
+                listMessagesCache[position].time_stamp.toString().asTime()
+            holder.blockUserMessage.setOnClickListener {
                 showToast("жмяк")
             }
         }
@@ -64,10 +68,31 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
         return listMessagesCache.size
     }
 
-    fun setList(list: List<CommonModel>) {
-        listMessagesCache = list
-        notifyDataSetChanged()
+    fun addItemToBottom(
+        item: CommonModel,
+        onSuccess: () -> Unit
+    ) {
+        if (!listMessagesCache.contains(item)) {
+            listMessagesCache.add(item)
+            notifyItemInserted(listMessagesCache.size)
+        }
+        onSuccess()
+    }
+
+    fun addItemToTop(
+        item: CommonModel,
+        onSuccess: () -> Unit
+    ) {
+        if (!listMessagesCache.contains(item)) {
+            listMessagesCache.add(item)
+            listMessagesCache.sortBy { it.time_stamp.toString() }
+            notifyItemInserted(0)
+        }
+        onSuccess()
     }
 }
+
+
+
 
 

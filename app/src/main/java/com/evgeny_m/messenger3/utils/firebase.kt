@@ -481,6 +481,7 @@ fun sendMassage(message: String, receivingUserId: String, type: String, function
     mapMessage[CHILD_FROM] = currentUserId
     mapMessage[CHILD_TYPE] = type
     mapMessage[CHILD_TEXT] = message
+    mapMessage[CHILD_ID] = messageKey.toString()
     mapMessage[CHILD_TIME_STAMP] = ServerValue.TIMESTAMP
 
     val mapDialog = hashMapOf<String,Any>()

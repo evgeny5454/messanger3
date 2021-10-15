@@ -1,14 +1,18 @@
 package com.evgeny_m.messenger3.fragments.main.single_chat
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.evgeny_m.messenger3.databinding.FragmentSingleChatBinding
 import com.evgeny_m.messenger3.fragments.main.ContactsFragment.Companion.receivingUserFullName
@@ -16,6 +20,7 @@ import com.evgeny_m.messenger3.fragments.main.ContactsFragment.Companion.receivi
 import com.evgeny_m.messenger3.model.CommonModel
 import com.evgeny_m.messenger3.model.UserModel
 import com.evgeny_m.messenger3.utils.*
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DatabaseReference
 
 
@@ -24,20 +29,24 @@ class SingleChatFragment : Fragment() {
     private lateinit var binding: FragmentSingleChatBinding
     private lateinit var toolbar: Toolbar
 
-    private lateinit var listenerUserDataToolbar : AppValueEventListener
-    private lateinit var messagesListener: AppValueEventListener
-
-    private lateinit var receivingUser : UserModel
-    private lateinit var refUser : DatabaseReference
+    private lateinit var listenerUserDataToolbar: AppValueEventListener
+    private lateinit var messagesListener: AppChildEventListener
+    private lateinit var receivingUser: UserModel
+    private lateinit var refUser: DatabaseReference
     private lateinit var refMessages: DatabaseReference
     private lateinit var adapter: SingleChatAdapter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var layoutManager: LinearLayoutManager
 
     private lateinit var userName: TextView
     private lateinit var userStatus: TextView
-    private lateinit var userPhoto : ImageView
+    private lateinit var userPhoto: ImageView
 
-    private var listMessages = emptyList<CommonModel>()
+    //private var listListeners = mutableListOf<AppChildEventListener>()
+    private var countMessages = 13
+    private var isScrolling = false
+    private var smoothScroll = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +58,7 @@ class SingleChatFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        initFields()
         initToolbar()
         initBackButton(toolbar)
         initListener()
@@ -57,11 +67,44 @@ class SingleChatFragment : Fragment() {
 
     }
 
+    private fun initFields() {
+        swipeRefreshLayout = binding.singleChatSwipeRefresh
+        layoutManager = LinearLayoutManager(this.context)
+    }
+
     private fun initRecycleView() {
         recyclerView = binding.singleChatMessagesList
         adapter = SingleChatAdapter()
         recyclerView.adapter = adapter
-        refMessages.addValueEventListener(messagesListener)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.isNestedScrollingEnabled = false
+        recyclerView.layoutManager = layoutManager
+        refMessages.limitToLast(countMessages).addChildEventListener(messagesListener)
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (isScrolling && dy < 0 && layoutManager.findFirstVisibleItemPosition() <= 3) {
+                    updateData()
+                }
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    isScrolling = true
+                }
+            }
+        })
+        swipeRefreshLayout.setOnRefreshListener { updateData() }
+    }
+
+    private fun updateData() {
+        smoothScroll = false
+        isScrolling = false
+        countMessages += 10
+        refMessages.removeEventListener(messagesListener)
+        refMessages.limitToLast(countMessages).addChildEventListener(messagesListener)
     }
 
     private fun initDatabase() {
@@ -70,6 +113,7 @@ class SingleChatFragment : Fragment() {
         refMessages = database.child(NODE_MESSAGES).child(currentUserId).child(receivingUserId)
 
         binding.singleChatBtnSendMessage.setOnClickListener {
+            smoothScroll = true
             val message = binding.singleChatEditMessage.text.toString()
             if (message.isEmpty()) {
                 showToast("message is empty")
@@ -86,12 +130,17 @@ class SingleChatFragment : Fragment() {
             receivingUser = it.getUserModel()
             updateDataToolbar()
         }
-        messagesListener = AppValueEventListener { dataSnapshot ->
-            listMessages = dataSnapshot.children.map {
-                it.getCommonModel()
+        messagesListener = AppChildEventListener {
+            val message = it.getCommonModel()
+            if (smoothScroll) {
+                adapter.addItemToBottom(message) {
+                    recyclerView.smoothScrollToPosition(adapter.itemCount)
+                }
+            } else {
+                adapter.addItemToTop(message) {
+                    swipeRefreshLayout.isRefreshing = false
+                }
             }
-            adapter.setList(listMessages)
-            recyclerView.smoothScrollToPosition(adapter.itemCount)
         }
 
     }
@@ -118,6 +167,6 @@ class SingleChatFragment : Fragment() {
         super.onPause()
         refUser.removeEventListener(listenerUserDataToolbar)
         refMessages.removeEventListener(messagesListener)
-    }
 
+    }
 }
