@@ -87,8 +87,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="60dp"
                 app:cardCornerRadius="20dp"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/single_chat_btn_send_message"
                 app:layout_constraintStart_toStartOf="parent"
@@ -109,6 +110,7 @@
                 android:id="@+id/single_chat_btn_send_message"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:visibility="gone"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/base_app_color"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -123,6 +125,23 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/single_chat_btn_attach"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/base_app_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_attach_file_24" />
+
+            </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
