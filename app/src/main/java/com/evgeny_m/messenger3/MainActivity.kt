@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -53,6 +54,8 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
+
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.close()
@@ -95,6 +98,4 @@ class MainActivity : AppCompatActivity() {
         }
         return false
     }
-
-
 }
