@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_changeBioFragment"
             app:destination="@id/changeBioFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
     </fragment>
     <fragment
         android:id="@+id/changeFullNameFragment"
@@ -53,4 +56,18 @@
         android:name="com.evgeny_m.messenger3.fragments.main.single_chat.SingleChatFragment"
         android:label="fragment_single_chat"
         tools:layout="@layout/fragment_single_chat" />
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.evgeny_m.messenger3.fragments.main.settings.photo_fragment.PhotoFragment"
+        android:label="fragment_photo"
+        tools:layout="@layout/fragment_photo" >
+        <action
+            android:id="@+id/action_photoFragment_to_setPhotoFragment"
+            app:destination="@id/setPhotoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setPhotoFragment"
+        android:name="com.evgeny_m.messenger3.fragments.main.settings.photo_fragment.SetPhotoFragment"
+        android:label="fragment_set_photo"
+        tools:layout="@layout/fragment_set_photo" />
 </navigation>

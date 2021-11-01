@@ -8,7 +8,8 @@ import androidx.core.content.ContextCompat
 
 const val READ_CONTACTS = Manifest.permission.READ_CONTACTS
 const val PERMISSION_REQUEST = 200
-const val READ_DATA = Manifest.permission.READ_EXTERNAL_STORAGE
+const val READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
+const val WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE
 
 fun checkPermission(permission: String): Boolean {
     return if (Build.VERSION.SDK_INT >= 23

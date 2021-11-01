@@ -93,12 +93,22 @@ class SettingsFragment : Fragment() {
                     true
                 }
                 R.id.settings_menu_add_photo -> {
-                    editUserPhoto()
+                    //editUserPhoto()
+                    //getPhotoFromStorage()
+                    view?.findNavController()?.navigate(R.id.action_settingsFragment_to_photoFragment)
+
                     true
                 }
                 else -> false
             }
         }
+    }
+
+    private fun getPhotoFromStorage() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivity(intent)
     }
 
     private fun editUserPhoto() {
